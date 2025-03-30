@@ -1,0 +1,130 @@
+<div class="product" data-product-id="jharoka">
+                    <img src="images/Jharoka.png" alt="Jharoka">
+                    <div class="product-info">
+                        <h3>Jharoka</h3>
+                        <p class="blurb">Experience the awe-inspiring beauty of this majestic masterpiece, meticulously adorned with captivating Lippan art and mirror work.</p>
+                        <p class="size">Size: 50" high x 70" wide (with frame)</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="rangeela">
+                    <img src="images/Rangeela.png" alt="Rangeela">
+                    <div class="product-info">
+                        <h3>Rangeela</h3>
+                        <p class="blurb">A vibrant masterpiece adorned with intricate Lippan art and dazzling mirror work, capturing the essence of tradition and modernity in a single glance.</p>
+                        <p class="size">Size: 36" diameter</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="mandala">
+                    <img src="images/Mandala.png" alt="Mandala">
+                    <div class="product-info">
+                        <h3>Mandala</h3>
+                        <p class="blurb">A striking art wall piece, blending the timeless elegance of Lippan art and the shimmering allure of mirror work against a captivating black backdrop.</p>
+                        <p class="size">Size: 30" x 24"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="dreamscape">
+                    <img src="images/Dreamscape.png" alt="Dreamscape">
+                    <div class="product-info">
+                        <h3>Dreamscape</h3>
+                        <p class="blurb">An enchanting fusion of contemporary flair and ethereal beauty, showcasing Lippan art and mirror work adorned with delicate butterflies and flowers on a dreamy canvas.</p>
+                        <p class="size">Size: 29" x 30"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="haveli">
+                    <img src="images/Haveli.png" alt="Haveli">
+                    <div class="product-info">
+                        <h3>Haveli</h3>
+                        <p class="blurb">Embracing heritage with grace, a traditional Lippan art and mirror work wall piece on a pristine white canvas, featuring an inviting Aangan framed by intricate Jharokha design.</p>
+                        <p class="size">Size: 29" x 30"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="rangrasiya">
+                    <img src="images/Rangrasiya.png" alt="Rangrasiya">
+                    <div class="product-info">
+                        <h3>Rang Rasiya</h3>
+                        <p class="blurb">Twirl through life in your exquisite and colorful outfit and paint the world with your vibrant spirit.</p>
+                        <p class="size">Size: 40" x 28"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="symphony">
+                    <img src="images/Symphony.png" alt="Symphony">
+                    <div class="product-info">
+                        <h3>Symphony</h3>
+                        <p class="blurb">These four exquisite Lippan wall art pieces are a stunning showcase of traditional craftsmanship, each uniquely adorned with intricate designs and shimmering art mirrors. These elegant pieces are perfect for enhancing your interiors with a touch of cultural charm and artistic sophistication.</p>
+                        <p class="size">Size: 13.5" x 3.5"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="roshan">
+                    <img src="images/Roshan.png" alt="Roshan">
+                    <div class="product-info">
+                        <h3>Roshan</h3>
+                        <p class="blurb">A flower pot boasts a mesmerizing display of Lippan artistry, transforming it into a captivating centerpiece of vibrant beauty.</p>
+                        <p class="size">Size: 48" x 18"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="potterspride">
+                    <img src="images/Potter's%20Pride.png" alt="Potter's Pride">
+                    <div class="product-info">
+                        <h3>Potter's Pride</h3>
+                        <p class="blurb">Illuminate your space with elegance and charm using these stunning candle/planter holders adorned with Lippan art and mirror work.</p>
+                        <p class="size">Size: 13.5" x 3.5"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="kalash">
+                    <img src="images/featured_art_2.png" alt="Kalash">
+                    <div class="product-info">
+                        <h3>Kalash</h3>
+                        <p class="blurb">Stands as a symbol of divine elegance and timeless tradition!</p>
+                        <p class="size">Size: 19.5" x 19.5"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="ganesha">
+                    <img src="images/Ganesha.png" alt="Ganesha">
+                    <div class="product-info">
+                        <h3>Ganesha</h3>
+                        <p class="blurb">This Ganesha artwork combines spiritual significance with artistic mastery. The intricate Lippan work and mirror details bring the divine form to life, creating a piece that is both a spiritual focal point and a stunning work of art.</p>
+                        <p class="size">Size: 48" x 18"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="nameplate">
+                    <img src="images/Name_Plate.png" alt="Name Plate">
+                    <div class="product-info">
+                        <h3>Name Plate</h3>
+                        <p class="blurb">Transform your entrance with this personalized name plate that combines traditional Lippan art with modern design. Each piece is carefully crafted to incorporate your name into the artistic design, creating a unique and welcoming statement piece.</p>
+                        <p class="size">Size: 14" diameter</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product" data-product-id="paisely">
+                    <img src="images/Paisely.png" alt="Paisely">
+                    <div class="product-info">
+                        <h3>Paisely</h3>
+                        <p class="blurb">This elegant piece reimagines the timeless paisley pattern through the medium of Lippan art. The intricate details and mirror work create a dynamic interplay of light and shadow, while the pattern itself speaks to both traditional and contemporary design sensibilities.</p>
+                        <p class="size">Size: 40" x 28"</p>
+                        <span class="stock in-stock">In Stock</span>
+                    </div>
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </div>
