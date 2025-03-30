@@ -149,7 +149,7 @@ function createModal() {
           <p class="size"><b>Size:</b></p>
           <p class="price"><b>Price:</b></p>
           <span class="stock"></span>
-          <button class="btn add-to-cart">Add to Cart</button>
+          <button class="btn add-to-cart" data-product-id="">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -202,6 +202,9 @@ document.addEventListener('DOMContentLoaded', function() {
           modal.querySelector('.stock').textContent = productData.inStock ? 'In Stock' : 'Out of Stock';
           modal.querySelector('.stock').className = `stock ${productData.inStock ? 'in-stock' : 'out-of-stock'}`;
           
+          // Set the product ID on the modal's Add to Cart button
+          modal.querySelector('.add-to-cart').dataset.productId = productId;
+          
           modal.style.display = 'block';
           // Trigger animations
           requestAnimationFrame(() => {
@@ -212,60 +215,325 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Add click handler for modal's Add to Cart button
+  modal.querySelector('.add-to-cart').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const productId = this.dataset.productId;
+    if (productId && window.cart) {
+      window.cart.addItem(productId);
+      
+      // Close the modal after adding to cart
+      modal.classList.remove('show');
+      modalContent.classList.remove('show');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+  });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+// Cart functionality
+class Cart {
+  constructor() {
+    this.items = {};
+    this.loadFromLocalStorage();
+    this.initializeCartUI();
+  }
 
-    addToCartButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        alert('Added to Cart! (This is a placeholder alert)');
-        // In a real application, you would handle cart logic here.
-      });
+  loadFromLocalStorage() {
+    const savedCart = localStorage.getItem('artesiaCart');
+    if (savedCart) {
+      this.items = JSON.parse(savedCart);
+      this.updateCartCount();
+      this.updateCartUI();
+    }
+  }
+
+  saveToLocalStorage() {
+    localStorage.setItem('artesiaCart', JSON.stringify(this.items));
+  }
+
+  addItem(productId) {
+    if (!this.items[productId]) {
+      this.items[productId] = {
+        quantity: 0,
+        ...productsDB[productId]
+      };
+    }
+    this.items[productId].quantity += 1;
+    this.saveToLocalStorage();
+    this.updateCartUI();
+    this.showAddedToCartFeedback();
+  }
+
+  removeItem(productId) {
+    delete this.items[productId];
+    this.saveToLocalStorage();
+    this.updateCartUI();
+  }
+
+  updateQuantity(productId, delta) {
+    const item = this.items[productId];
+    if (item) {
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        this.removeItem(productId);
+      } else {
+        this.saveToLocalStorage();
+        this.updateCartUI();
+      }
+    }
+  }
+
+  getTotal() {
+    return Object.values(this.items).reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  }
+
+  updateCartCount() {
+    const count = Object.values(this.items).reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cart-count').textContent = count;
+  }
+
+  showAddedToCartFeedback() {
+    const feedback = document.createElement('div');
+    feedback.className = 'cart-feedback';
+    feedback.textContent = 'Added to cart!';
+    document.body.appendChild(feedback);
+
+    setTimeout(() => {
+      feedback.classList.add('show');
+      setTimeout(() => {
+        feedback.classList.remove('show');
+        setTimeout(() => {
+          feedback.remove();
+        }, 300);
+      }, 2000);
+    }, 100);
+  }
+
+  updateCartUI() {
+    this.updateCartCount();
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    
+    cartItemsContainer.innerHTML = '';
+    
+    Object.entries(this.items).forEach(([productId, item]) => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'cart-item';
+      itemElement.innerHTML = `
+        <img src="${item.image}" alt="${item.name}">
+        <div class="cart-item-details">
+          <h3>${item.name}</h3>
+          <div class="cart-item-price">$${item.price}</div>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn minus" data-product-id="${productId}">-</button>
+            <span>${item.quantity}</span>
+            <button class="quantity-btn plus" data-product-id="${productId}">+</button>
+          </div>
+        </div>
+        <button class="remove-item" data-product-id="${productId}">&times;</button>
+      `;
+      cartItemsContainer.appendChild(itemElement);
+    });
+    
+    cartTotal.textContent = `$${this.getTotal().toFixed(2)}`;
+  }
+
+  initializeCartUI() {
+    const cartBtn = document.getElementById('cart-btn');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCart = document.querySelector('.close-cart');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    cartBtn.addEventListener('click', () => {
+      cartModal.style.display = 'block';
+      setTimeout(() => cartModal.classList.add('show'), 10);
+    });
+
+    closeCart.addEventListener('click', () => {
+      cartModal.classList.remove('show');
+      setTimeout(() => cartModal.style.display = 'none', 300);
+    });
+
+    cartModal.addEventListener('click', (e) => {
+      if (e.target === cartModal) {
+        cartModal.classList.remove('show');
+        setTimeout(() => cartModal.style.display = 'none', 300);
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        e.stopPropagation();
+        const productId = e.target.closest('.product')?.dataset.productId;
+        if (productId) {
+          this.addItem(productId);
+        }
+      }
+      
+      if (e.target.classList.contains('quantity-btn')) {
+        const productId = e.target.dataset.productId;
+        const delta = e.target.classList.contains('plus') ? 1 : -1;
+        this.updateQuantity(productId, delta);
+      }
+      
+      if (e.target.classList.contains('remove-item')) {
+        const productId = e.target.dataset.productId;
+        this.removeItem(productId);
+      }
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      if (Object.keys(this.items).length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      // Here you would typically redirect to a checkout page
+      // For now, we'll just show an alert
+      alert('Proceeding to checkout... (This is a placeholder)');
+    });
+  }
+}
+
+// Initialize cart when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  window.cart = new Cart();
+});
+
+// Remove the old add to cart alert
+document.addEventListener('DOMContentLoaded', function() {
+  const addToCartButtons = document.querySelectorAll('.add-to-cart');
+  addToCartButtons.forEach(button => {
+    const oldClickListeners = button.getEventListeners?.('click') || [];
+    oldClickListeners.forEach(listener => {
+      button.removeEventListener('click', listener.listener);
     });
   });
-
-// Email sending functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('.contact-form form');
-
-    contactForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
-
-        const name = nameInput.value;
-        const email = emailInput.value;
-        const message = messageInput.value;
-
-        // Basic validation
-        if (!name || !email || !message) {
-            alert("Please fill out all fields.");
-            return;
-        }
-
-        // Send email via fetch
-        fetch('http://localhost:3000', { // Update this line
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, email, message }),
-        })
-
-        .then(response => {
-            if (response.ok) {
-                alert('Email sent successfully!');
-                contactForm.reset(); // Reset the form after successful submission
-            } else {
-                alert('Error sending email.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
 });
 
+// Add cart feedback styles
+const style = document.createElement('style');
+style.textContent = `
+  .cart-feedback {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #C4A484;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .cart-feedback.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+document.head.appendChild(style);
+
+// Email functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+  if (!contactForm) return; // Only run on contact page
+
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  
+  function showMessage(element, duration = 5000) {
+    element.style.display = 'block';
+    setTimeout(() => {
+      element.style.display = 'none';
+    }, duration);
+  }
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const submitButton = document.getElementById('send-message');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Create the email body in the desired format
+    const emailBody = `
+      Name: ${name}
+      Email: ${email}
+
+      Dear Artesia Designs,
+      ${message}
+
+      Thank you,
+      ${name}
+    `;
+
+    const templateParams = {
+      to_email: 'kotasumedh@gmail.com', // Email recipient
+      from_name: name, // Sender's name
+      from_email: email, // Sender's email
+      message: emailBody // Formatted message content
+    };
+
+    emailjs.send(
+      'service_s571exl', // Replace with your EmailJS service ID
+      'template_1tcjrli', // Replace with your EmailJS template ID
+      templateParams
+    )
+    .then(function() {
+      showMessage(successMessage);
+      contactForm.reset();
+    })
+    .catch(function(error) {
+      console.error('Failed to send email:', error);
+      showMessage(errorMessage);
+    })
+    .finally(function() {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Message';
+    });
+  });
+});
+
+// Add styles for success/error messages
+const emailStyles = document.createElement('style');
+emailStyles.textContent = `
+  .message {
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+`;
+document.head.appendChild(emailStyles);
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if the current page is the shop page
+  if (window.location.pathname.includes('shop.html')) {
+    const cartContainer = document.querySelector('.cart-container');
+    if (cartContainer) {
+      cartContainer.classList.add('show'); // Add the class to trigger the animation
+    }
+  }
+});
