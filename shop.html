@@ -23,10 +23,32 @@
             <li><a href="about.html">About</a></li>
             <li><a href="shop.html" class="active">Shop</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li class="cart-container">
+              <button id="cart-btn" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+      <div class="cart-modal-content">
+        <span class="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-summary">
+          <div class="cart-total">
+            <span>Total:</span>
+            <span id="cart-total">$0.00</span>
+          </div>
+          <button id="checkout-btn" class="btn">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
 
     <section class="shop-section">
         <div class="container">
@@ -176,4 +198,5 @@
       </div>
     </footer>
      <script src="js/script.js"></script>
+</body>
 </html>
