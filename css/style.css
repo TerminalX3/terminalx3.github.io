@@ -705,6 +705,11 @@ footer .container {
   font-family: 'Playfair Display', serif;
 }
 
+img.shop_image {
+  width: auto;
+  height: 230px;
+}
+
 /* Modal Styles */
 .product-modal {
   display: none;
